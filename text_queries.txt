@@ -1,0 +1,33 @@
+create table groups(
+id serial primary key,
+name varchar(50)
+);
+
+create table subjects(
+  id serial primary key,
+  name varchar(50)
+);
+
+create table people(
+  id serial primary key,
+  first_name varchar(20),
+  last_name varchar(20),
+  father_name varchar(20),
+  type varchar(1),
+  group_id integer references groups(id)
+);
+
+create table marks(
+  id serial primary key,
+  student_id integer references people(id),
+  subject_id integer references subjects(id),
+  teacher_id integer references people(id),
+  value integer
+);
+
+Dump:
+$ pg_dump -U postgres uni_db > ~/Documents/db/lab1.dump
+
+Restore:
+$ CREATE DATABASE users WITH ENCODING='UTF-8';
+$ sudo -u postgres psql uni_db < /home/user/Documents/db/lab1.dump;
